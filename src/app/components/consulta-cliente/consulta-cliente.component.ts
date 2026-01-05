@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { NgxMaskPipe } from 'ngx-mask';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consulta-cliente',
@@ -18,14 +20,24 @@ import { NgxMaskPipe } from 'ngx-mask';
     MatIconModule,
     NgxMaskPipe
   ],
+  animations: [
+    trigger('fadeOut', [
+      transition(':leave', [
+        animate('500ms ease-out', style({ opacity: 0, transform: 'translateX(50px)' }))
+      ])
+    ])
+  ],
   templateUrl: './consulta-cliente.component.html',
   styleUrl: './consulta-cliente.component.scss'
 })
 export class ConsultaClienteComponent implements OnInit {
   private clienteService = inject(ClienteService);
+  private snackBar = inject(MatSnackBar);
   
-  displayedColumns: string[] = ['nome', 'cpf', 'email', 'telefone', 'dataCadastro'];
+  displayedColumns: string[] = ['nome', 'cpf', 'email', 'telefone', 'dataCadastro', 'acoes'];
   dataSource: Cliente[] = [];
+
+  clienteEmExclusaoId: string | null = null;
 
   ngOnInit(): void {
     this.carregarClientes();
@@ -35,7 +47,18 @@ export class ConsultaClienteComponent implements OnInit {
     this.dataSource = this.clienteService.obterClientes();
   }
 
-  excluir(id: string): void {
-    console.log('Excluir ID:', id);
+  prepararExclusao(id: string): void {
+    this.clienteEmExclusaoId = id;
+  }
+
+  cancelarExclusao(): void {
+    this.clienteEmExclusaoId = null;
+  }
+
+  confirmarExclusao(id: string): void {
+    this.clienteService.removerCliente(id);
+    this.snackBar.open('Cliente removido com sucesso!', 'Fechar', { duration: 3000 });
+    this.dataSource = this.dataSource.filter(c => c.id !== id);
+    this.clienteEmExclusaoId = null;
   }
 }

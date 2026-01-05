@@ -33,4 +33,10 @@ export class ClienteService {
     clientes.push(cliente);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(clientes));
   }
+
+  removerCliente(id: string): void {
+    const clientes = this.obterClientes();
+    const clientesFiltrados = clientes.filter(c => c.id !== id);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(clientesFiltrados));
+  }
 }
