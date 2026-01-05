@@ -5,7 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -16,6 +18,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatSnackBarModule,
     NgxMaskDirective
   ],
   templateUrl: './cadastro-cliente.component.html',
@@ -23,6 +26,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 })
 export class CadastroClienteComponent {
   private fb = inject(FormBuilder);
+  private clienteService = inject(ClienteService);
+  private snackBar = inject(MatSnackBar);
 
   cadastroForm: FormGroup = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -33,7 +38,21 @@ export class CadastroClienteComponent {
 
   salvar(): void {
     if (this.cadastroForm.valid) {
-      console.log('Dados do Cliente:', this.cadastroForm.value);
+      const novoCliente = { ...this.cadastroForm.value };
+    
+      this.clienteService.salvarCliente(novoCliente);
+      
+      this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      });
+
+      this.cadastroForm.reset();
+      
+      Object.keys(this.cadastroForm.controls).forEach(key => {
+        this.cadastroForm.get(key)?.setErrors(null);
+      });
     }
   }
 }
