@@ -9,6 +9,7 @@ import { Cliente } from '../../models/cliente.model';
 import { NgxMaskPipe } from 'ngx-mask';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consulta-cliente',
@@ -33,6 +34,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ConsultaClienteComponent implements OnInit {
   private clienteService = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
   
   displayedColumns: string[] = ['nome', 'cpf', 'email', 'telefone', 'dataCadastro', 'acoes'];
   dataSource: Cliente[] = [];
@@ -60,5 +62,9 @@ export class ConsultaClienteComponent implements OnInit {
     this.snackBar.open('Cliente removido com sucesso!', 'Fechar', { duration: 3000 });
     this.dataSource = this.dataSource.filter(c => c.id !== id);
     this.clienteEmExclusaoId = null;
+  }
+
+  editar(id: string): void {
+    this.router.navigate(['/cadastrar', id]);
   }
 }

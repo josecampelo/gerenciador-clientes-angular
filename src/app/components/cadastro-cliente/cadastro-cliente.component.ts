@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ClienteService } from '../../services/cliente.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -24,10 +26,16 @@ import { ClienteService } from '../../services/cliente.service';
   templateUrl: './cadastro-cliente.component.html',
   styleUrl: './cadastro-cliente.component.scss'
 })
-export class CadastroClienteComponent {
+export class CadastroClienteComponent implements OnInit {
   private fb = inject(FormBuilder);
   private clienteService = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  modoEdicao = false;
+  clienteId: string | null = null;
+  dadosOriginaisCliente?: any;
 
   cadastroForm: FormGroup = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -36,23 +44,35 @@ export class CadastroClienteComponent {
       cpf: ['', [Validators.required]]
   });
 
+  ngOnInit(): void {
+    this.clienteId = this.route.snapshot.paramMap.get('id');
+    
+    if (this.clienteId) {
+      this.modoEdicao = true;
+      const cliente = this.clienteService.obterClientePorId(this.clienteId);
+      
+      if (cliente) {
+        this.dadosOriginaisCliente = cliente;
+        this.cadastroForm.patchValue(cliente);
+      }
+    }
+  }
+
   salvar(): void {
     if (this.cadastroForm.valid) {
-      const novoCliente = { ...this.cadastroForm.value };
-    
-      this.clienteService.salvarCliente(novoCliente);
-      
-      this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
-
-      this.cadastroForm.reset();
-      
-      Object.keys(this.cadastroForm.controls).forEach(key => {
-        this.cadastroForm.get(key)?.setErrors(null);
-      });
+      if (this.modoEdicao) {
+        const clienteAtualizado = {
+          ...this.dadosOriginaisCliente,
+          ...this.cadastroForm.value
+        };
+        this.clienteService.atualizarCliente(clienteAtualizado);
+        this.snackBar.open('Cliente atualizado com sucesso!', 'Fechar', { duration: 3000 });
+        this.router.navigate(['/consultar']);
+      } else {
+        this.clienteService.salvarCliente(this.cadastroForm.value);
+        this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', { duration: 3000 });
+        this.cadastroForm.reset();
+      }
     }
   }
 }

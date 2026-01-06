@@ -3,6 +3,7 @@ import { CadastroClienteComponent } from './components/cadastro-cliente/cadastro
 import { ConsultaClienteComponent } from './components/consulta-cliente/consulta-cliente.component';
 
 export const routes: Routes = [
-    {path: 'cadastrar', component: CadastroClienteComponent},
+    { path: 'cadastrar', component: CadastroClienteComponent },
+    { path: 'cadastrar/:id', component: CadastroClienteComponent },
     { path: 'consultar', component: ConsultaClienteComponent }
 ];
