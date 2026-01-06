@@ -66,12 +66,12 @@ export class CadastroClienteComponent implements OnInit {
           ...this.cadastroForm.value
         };
         this.clienteService.atualizarCliente(clienteAtualizado);
-        this.snackBar.open('Cliente atualizado com sucesso!', 'Fechar', { duration: 3000 });
+        this.snackBar.open('Cliente atualizado com sucesso!', 'Fechar', { duration: 5000 });
         this.router.navigate(['/consultar']);
       } else {
         this.clienteService.salvarCliente(this.cadastroForm.value);
-        this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', { duration: 3000 });
-        this.cadastroForm.reset();
+        this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', { duration: 5000 });
+        this.router.navigate(['/consultar']);
       }
     }
   }
