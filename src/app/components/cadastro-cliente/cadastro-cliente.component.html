@@ -45,6 +45,29 @@
             </mat-form-field>
         </div>
 
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>UF</mat-label>
+            <mat-select formControlName="uf">
+              @for (uf of listaUfs; track uf.id) {
+                <mat-option [value]="uf.sigla">{{ uf.nome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Município</mat-label>
+            <mat-select formControlName="municipio">
+              @if (carregandoMunicipios) {
+                <mat-option disabled>Carregando cidades...</mat-option>
+              }
+              @for (muni of listaMunicipios; track muni.codigo_ibge) {
+                <mat-option [value]="muni.nome">{{ muni.nome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="actions">
           <button mat-raised-button color="primary" type="submit" [disabled]="cadastroForm.invalid">
             {{ modoEdicao ? 'Atualizar' : 'Salvar' }}

@@ -5,4 +5,6 @@ export interface Cliente {
     telefone: string;
     cpf: string;
     dataCadastro: Date;
+    uf: string;
+    municipio: string;
 }
