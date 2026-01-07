@@ -1,59 +1,62 @@
-# GerenciadorClientesAngular
+# Gerenciador de Clientes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+Esta é uma aplicação de **gestão de clientes** desenvolvida para consolidar os fundamentos do **Angular**. O foco do projeto foi aplicar na prática um **CRUD** completo com **persistência local**, **validações dinâmicas** e **integração com serviços externos**.
 
-## Development server
+## Demonstração
 
-To start a local development server, run:
+A aplicação oferece um fluxo fluido para o gerenciamento de clientes, incluindo **máscaras em tempo real**, **busca instantânea** e **animações de transição**.
 
-```bash
-ng serve
-```
+<p align="center"> <img src="assets/demonstracao-gerenciador-clientes.gif" alt="Demonstração do Gerenciador de Clientes" width="700"> </p>
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse a aplicação online: [Gerenciador de Clientes](https://josecampelo.github.io/gerenciador-clientes-angular/).
 
-## Code scaffolding
+## Tecnologias e Ferramentas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Angular 19**: Desenvolvimento moderno utilizando Standalone Components e a nova sintaxe de controle de fluxo (``@for``, ``@if``).
+* **Angular Material**: Utilização de componentes como ``mat-table``, ``mat-card``, ``mat-select`` e ``mat-snack-bar``.
+* **Angular Animations**: Criação de transições suaves (``fadeOut``) na remoção de registros da tabela.
+* **ngx-mask**: Implementação de máscaras dinâmicas para CPF e Telefone.
+* **LocalStorage**: Persistência de dados no navegador para simular o comportamento de um banco de dados.
+* **BrasilAPI**: Integração com serviços de busca do IBGE para carregamento dinâmico de UFs e Municípios.
 
-```bash
-ng generate component component-name
-```
+## Funcionalidades Principais
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+* **CRUD Completo**: Cadastro, listagem, edição e exclusão de clientes com IDs únicos (UUID).
+* **Busca em Tempo Real**: Filtro reativo na tabela de consulta que atualiza os resultados conforme a digitação.
+* **Dropdowns em Cascata**: Seleção de Municípios dependente da UF selecionada, consumindo dados em tempo real.
+* **Confirmação de Exclusão Inline**: Sistema de segurança que solicita confirmação antes de remover um registro, sem interromper o fluxo do usuário.
+* **Feedback ao Usuário**: Notificações via SnackBar para confirmação de ações bem-sucedidas.
 
-```bash
-ng generate --help
-```
+## Conceitos Praticados
 
-## Building
+* **Serviços e HttpClient**: Centralização da lógica de negócio e consumo de APIs REST.
+* **Formulários Reativos (``ReactiveFormsModule``)**: Validações customizadas, controle de estado de campos e uso de ``patchValue``.
+* **Roteamento Avançado**: Uso de parâmetros de rota (``:id``) para reutilização de componentes em modo de edição e redirecionamentos (``pathMatch: 'full'``).
+* **Comunicação entre Componentes**: Gerenciamento de estado de visualização para lidar com listas filtradas e originais.
 
-To build the project run:
+## Como rodar o projeto localmente
 
-```bash
-ng build
-```
+1. **Clone este repositório**:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+    ```bash
+    git clone https://github.com/josecampelo/gerenciador-clientes-angular.git
+    ```
+2. **Acesse a pasta do projeto**:
 
-## Running unit tests
+    ```bash
+    cd gerenciador-clientes-angular
+    ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+3. **Instale as dependências**:
 
-```bash
-ng test
-```
+    ```bash
+    npm install
+    ```
 
-## Running end-to-end tests
+4. **Inicie o servidor**:
 
-For end-to-end (e2e) testing, run:
+    ```bash
+    ng serve
+    ```
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+5. **Acesse**: ``http://localhost:4200/``.
