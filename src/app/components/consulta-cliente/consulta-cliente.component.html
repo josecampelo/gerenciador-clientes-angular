@@ -34,6 +34,16 @@
             <td mat-cell *matCellDef="let cliente">{{ cliente.telefone | mask: '(00) 00000-0000' }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="uf">
+          <th mat-header-cell *matHeaderCellDef>UF</th>
+          <td mat-cell *matCellDef="let cliente">{{cliente.uf}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="municipio">
+          <th mat-header-cell *matHeaderCellDef>Município</th>
+          <td mat-cell *matCellDef="let cliente">{{cliente.municipio}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="dataCadastro">
           <th mat-header-cell *matHeaderCellDef>Data de Cadastro</th>
           <td mat-cell *matCellDef="let cliente">{{cliente.dataCadastro | date:'dd/MM/yyyy'}}</td>

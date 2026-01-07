@@ -40,7 +40,7 @@ export class ConsultaClienteComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   
-  displayedColumns: string[] = ['nome', 'cpf', 'email', 'telefone', 'dataCadastro', 'acoes'];
+  displayedColumns: string[] = ['nome', 'cpf', 'email', 'telefone', 'uf', 'municipio', 'dataCadastro', 'acoes'];
   dataSource: Cliente[] = [];
   clientesCompleto: Cliente[] = [];
 
