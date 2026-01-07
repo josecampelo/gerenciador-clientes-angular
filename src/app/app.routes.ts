@@ -5,5 +5,7 @@ import { ConsultaClienteComponent } from './components/consulta-cliente/consulta
 export const routes: Routes = [
     { path: 'cadastrar', component: CadastroClienteComponent },
     { path: 'cadastrar/:id', component: CadastroClienteComponent },
-    { path: 'consultar', component: ConsultaClienteComponent }
+    { path: 'consultar', component: ConsultaClienteComponent },
+    { path: '', redirectTo: 'consultar', pathMatch: 'full' },
+    { path: '**', redirectTo: 'consultar' }
 ];
